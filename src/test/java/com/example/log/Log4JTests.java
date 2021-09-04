@@ -1,6 +1,6 @@
 package com.example.log;
 
-import org.apache.log4j.Logger;
+//冲突注释：import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import sun.rmi.runtime.Log;
@@ -33,7 +33,7 @@ class Log4JTests {
 	@Test
 	public void test(){
 		//org.apache.log4j.Logger;
-		Logger logger = Logger.getLogger(Log4JTests.class);
+		//冲突注释 Logger logger = Logger.getLogger(Log4JTests.class);
 	}
 
 }
