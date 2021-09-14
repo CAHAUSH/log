@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="5">
+    <Properties>
+        <Property name="genericPattern" value="%date{yyy-MM-dd HH:mm:ss.SSS} %level [%file:%line] : %msg%n"/>
+        <property name="LOG_HOME" value="./logs"/>
+        <property name="APP_LOG_HOME" value="${LOG_HOME}"/>
+        <property name="ACCESS_LOG_HOME" value="${LOG_HOME}/bcoc"/>
+        <!-- 测试 -->
+        <!--<Property name="flume-host-ip" value="152.55.226.17"/>-->
+        <!-- 生产 -->
+        <Property name="flume-host-ip" value="10.243.17.16"/>
+        <Property name="flume-host-port" value="4141"/>
+        <!--<Property name="flume-pattern" value="%X{log_ver}~!~%X{timestamp}~!~%X{error_type}~!~%X{trace_id}~!~%X{call_id}~!~%X{parent_id}~!~%X{channel_code}~!~%X{link_type}~!~%X{root_comp_version}~!~%X{comp_version}~!~%X{link_id}~!~%X{srvice_name}~!~%X{maxexecnum}~!~%X{ret_code}~!~%X{ret_msg}~!~%X{login_no}~!~%X{dest_ip}~!~%X{ip_address}~!~%X{port}~!~%X{keyID}~!~%X{op_code}~!~%X{group_scene_code}~!~%X{param_tp}~!~%X{param}~$~"/>-->
+        <!--<Property name="flume-pattern-safe" value="%X{log_ver}~!~%X{timestamp}~!~%X{trace_id}~!~%X{ret_code}~!~A201~!~%X{login_no}~!~%X{dest_ip}~!~%X{ip_address}~!~%X{port}~!~%X{session_id}~!~%X{opr_ser_name}~!~%X{opr_round_audit}~!~%X{key_opcode}~!~%X{effective_begin_time}~!~%X{effective_end_time}~!~%X{user_grant_type}~!~%X{ope_login_no}~!~%X{op_code}~!~%X{module_name}~!~%X{resource_name}~!~%X{ope_content}~!~%X{ope_result}~!~%X{access_sign}~$~"/>-->
+        <Property name="file-size" value="50MB"/>
+        <Property name="file-num" value="200"/>
+        <Property name="file-remain-days" value="30D"/>
+    </Properties>
+
+    <Appenders>
+        <Console name="consoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${genericPattern}"/>
+        </Console>
+
+        <RollingRandomAccessFile name="RollAcessFileAppender" fileName="${APP_LOG_HOME}/bcoc.log" filePattern="${APP_LOG_HOME}/bcoc.%d{yyyyMMdd}.%i.log.gz">
+            <PatternLayout pattern="${genericPattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="${file-size}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${file-num}">
+                <Delete basePath="${APP_LOG_HOME}" maxDepth="1">
+                    <IfFileName glob="app.*.*.*.log.gz"/>
+                    <IfLastModified age="${file-remain-days}"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <Loggers>
+
+        <!--<logger name="uniform" level="info" additivity="true">
+            <AppenderRef ref="async"/>
+        </logger>-->
+
+        <!-- 发送日志 -->
+        <root level="info" includeLocation="false">
+            <appender-ref ref="consoleAppender"/>
+            <appender-ref ref="RollAcessFileAppender"/>
+        </root>
+    </Loggers>
+</Configuration>
