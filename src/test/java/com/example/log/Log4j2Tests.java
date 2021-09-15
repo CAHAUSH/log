@@ -21,6 +21,19 @@ class Log4j2Tests {
 		 * log4j2 既是一款日志门面，也是一款日志实现；
 		 * 由于slf4j 门面更早流行，并被任何；因此slf4j + log4j2的组合是未来日志框架使用趋势
 		 *
+		 *
+		 * 异步日志
+		 * 实现了两种实现方式：
+		 * 	1）AsyncAppender（几乎不用，性能提升太小）对应Appender组件
+		 * 	2）AsyncLogger，对应logger组件
+		 *
+		 * <!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
+		 * <dependency>
+		 *     <groupId>com.lmax</groupId>
+		 *     <artifactId>disruptor</artifactId>
+		 *     <version>3.4.4</version>
+		 * </dependency>
+		 *
 		 * */
 	}
 

@@ -35,9 +35,19 @@
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingRandomAccessFile>
+
+        <!--异步日志  AsyncAppender模式 （不推荐使用该模式）-->
+        <Async name="async">
+            <!--此处指定具体的appender-->
+            <AppenderRef ref="consoleAppender"/>
+        </Async>
     </Appenders>
 
     <Loggers>
+        <!--通常需要使用includeLocation="false"来关闭行号信息，应为会对性能的影响比较大-->
+        <!--<AsyncLogger name="com.example.log" level="trace" includeLocation="false" additivity="false">
+            <AppenderRef ref="console"/>
+        </AsyncLogger>-->
 
         <!--<logger name="uniform" level="info" additivity="true">
             <AppenderRef ref="async"/>
@@ -47,6 +57,7 @@
         <root level="info" includeLocation="false">
             <appender-ref ref="consoleAppender"/>
             <appender-ref ref="RollAcessFileAppender"/>
+            <appender-ref ref="async"/>
         </root>
     </Loggers>
 </Configuration>
